@@ -1,6 +1,5 @@
-package com.anntie.server;
+package com.anntie.message;
 
-import com.anntie.message.Message;
 
 public class Ping extends Message {
 	private static final long serialVersionUID = 3915186442090210103L;

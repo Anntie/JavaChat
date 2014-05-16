@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import com.anntie.message.Message;
+import com.anntie.message.Ping;
 
 
 public class ClientThread extends Thread implements Runnable {
@@ -109,7 +110,7 @@ public class ClientThread extends Thread implements Runnable {
                 }
             }
 
-        } catch (SocketException e) {
+        } catch (SocketException | NullPointerException e) {
             System.out.println(login + " disconnected!");
             Server.getUserList().deleteUser(login);
             broadcast(Server.getUserList().getClientsList(), new Message(Config.SERVER_NAME, "The user " + login + " has been disconnected.", Server.getUserList().getUsers()));

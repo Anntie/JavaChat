@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+import com.anntie.message.ChatHistory;
+
 public class Server {
 	private static UsersList list = new UsersList();
     private static ChatHistory chatHistory = new ChatHistory();
