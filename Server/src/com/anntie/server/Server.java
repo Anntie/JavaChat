@@ -13,22 +13,28 @@ public class Server {
 	
 	public static void main(String[] args) {
 		try {
-			@SuppressWarnings("resource")
-			ServerSocket socketListener = new ServerSocket(Config.PORT);
-			System.out.println("Starting SC Server on port " + Config.PORT + "...");
-			System.out.println("Success. Waiting for clients.");
-			while(true) {
-				Socket client = null;
-				while(client == null) {
-					client = socketListener.accept();
+			int port = Integer.parseInt(args[0]);
+			if(args.length == 1) {
+				@SuppressWarnings("resource")
+				ServerSocket socketListener = new ServerSocket(port);
+				System.out.println("Starting SC Server on port " + port + "...");
+				System.out.println("Success. Waiting for clients.");
+				while(true) {
+					Socket client = null;
+					while(client == null) {
+						client = socketListener.accept();
+					}
+					new ClientThread(client);
 				}
-				new ClientThread(client);
 			}
+			else System.out.println("Usage: java -jar server.jar <port>");
 		} catch (SocketException e) {
 			System.out.println("Socket exception:");
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println("Usage: java -jar server.jar <Integer port>");
 		}
 	}
 
