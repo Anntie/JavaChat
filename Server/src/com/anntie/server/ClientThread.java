@@ -2,6 +2,7 @@ package com.anntie.server;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -37,7 +38,11 @@ public class ClientThread extends Thread implements Runnable {
             final ObjectInputStream inputStream   = new ObjectInputStream(this.socket.getInputStream());
             final ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());
 
-            this.c = (Message) inputStream.readObject();
+            try {
+            	this.c = (Message) inputStream.readObject();
+            } catch(EOFException e) {
+            	System.out.println(" has diconnected.");
+            }
             this.login = this.c.getLogin();
 
 
@@ -87,7 +92,11 @@ public class ClientThread extends Thread implements Runnable {
                     this.flag = false;
                     break;
                 }
-                this.c = (Message) inputStream.readObject();
+                try {
+                	this.c = (Message) inputStream.readObject();
+                } catch(EOFException e) {
+                	System.out.println(login + " has diconnected.");
+                }
 
                 if (this.c instanceof Ping) {
                     this.inPacks++;
